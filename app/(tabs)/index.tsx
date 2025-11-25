@@ -153,7 +153,7 @@ export default function ExploreScreen() {
         </ReactNative.View>
 
         <ReactNative.View style={{ marginTop: 32, alignItems: 'center' }}>
-          <ReactNative.Text style={{ color: 'rgba(255,255,255,0.55)' }}>(c) 2024 Menger Sponge. All rights reserved.</ReactNative.Text>
+          <ReactNative.Text style={{ color: 'rgba(255,255,255,0.55)' }}>Made with 💗 by Strajan Andrei and Rus Vlad-Andrei</ReactNative.Text>
         </ReactNative.View>
       </ReactNative.ScrollView>
 

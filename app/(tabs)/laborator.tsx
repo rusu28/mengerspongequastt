@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useMemo, useState } from 'react'
 import * as ReactNative from 'react-native'
 import { ArchBackground, ARCH } from '@/components/arch-theme'
-import { ArchNav } from '@/components/arch-nav'
+import { RuriNav } from '@/components/ruri-nav'
 
 type Mode = 'carpet' | 'cantor' | 'triangle'
 type Speed = 'slow' | 'normal' | 'fast'
@@ -250,7 +250,7 @@ export default function LaboratorFractal() {
           </ReactNative.View>
         </ReactNative.View>
         <ReactNative.View style={{ paddingHorizontal: 16, marginTop: 8 }}>
-          <ArchNav active="/laborator" />
+          <RuriNav />
         </ReactNative.View>
 
         <ReactNative.View style={{ alignItems: 'center', marginTop: 24 }}>

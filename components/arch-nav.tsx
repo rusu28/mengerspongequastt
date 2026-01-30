@@ -1,15 +1,24 @@
-﻿import React from 'react'
+import React from 'react'
 import { ScrollView, StyleSheet, Text, Pressable, View } from 'react-native'
 import { useRouter } from 'expo-router'
 import { ARCH } from './arch-theme'
 
 const NAV_ITEMS = [
   { label: 'Home', route: '/' },
-  { label: 'Explore', route: '/explore' },
+  { label: 'Explorer', route: '/explore' },
+  { label: 'Shader', route: '/shader-studio' },
+  { label: 'Quiz', route: '/quiz' },
+  { label: 'Learn', route: '/learn' },
+  { label: 'Build', route: '/build-steps' },
+  { label: 'Real Life', route: '/real-life' },
+  { label: 'Audio', route: '/audio-reactive' },
+  { label: 'Builder', route: '/builder' },
+  { label: 'Portal', route: '/portal' },
+  { label: 'Daily', route: '/daily' },
+  { label: 'Settings', route: '/settings' },
   { label: 'Energy', route: '/energy' },
-  { label: 'Game', route: '/game' },
   { label: 'Lab', route: '/laborator' },
-  { label: 'Maths', route: '/mathsandjeans' }
+  { label: 'Maths Lab', route: '/mathsandjeans' }
 ]
 
 export function ArchNav({ active }: { active?: string }) {
@@ -37,30 +46,31 @@ export function ArchNav({ active }: { active?: string }) {
 
 const styles = StyleSheet.create({
   wrap: {
-    marginBottom: 12
+    marginBottom: 8
   },
   row: {
     gap: 10,
-    paddingHorizontal: 4
+    paddingHorizontal: 2
   },
   pill: {
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 999,
-    backgroundColor: ARCH.PANEL,
+    backgroundColor: 'transparent',
     borderWidth: 1,
     borderColor: ARCH.BORDER
   },
   pillActive: {
-    backgroundColor: ARCH.ACCENT,
-    borderColor: 'rgba(255,255,255,0.18)'
+    borderColor: ARCH.ACCENT,
+    backgroundColor: 'rgba(240,234,214,0.18)'
   },
   pillText: {
-    color: ARCH.TEXT,
-    fontWeight: '800',
-    fontSize: 12
+    color: ARCH.SUB,
+    fontWeight: '700',
+    fontSize: 12,
+    letterSpacing: 1.2
   },
   pillTextActive: {
-    color: '#120A16'
+    color: ARCH.TEXT
   }
 })

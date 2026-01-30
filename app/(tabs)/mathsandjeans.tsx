@@ -6,11 +6,14 @@ import Latex from 'react-latex-next'
 /**
  * UI constants
  */
-const BG = '#0a1017'
-const BOARD = '#0b1c14'
-const INK = '#d6f5d3'
-const SUB = 'rgba(234,241,255,0.7)'
-const ACCENT = '#6ee7ff'
+import { ArchBackground, ARCH } from '@/components/arch-theme'
+import { RuriNav } from '@/components/ruri-nav'
+
+const BG = ARCH.BG
+const BOARD = ARCH.PANEL
+const INK = ARCH.TEXT
+const SUB = ARCH.SUB
+const ACCENT = ARCH.ACCENT
 
 /**
  * Helpers: numbers
@@ -22,7 +25,9 @@ function fmt(x: number, digits = 6) {
   if (!Number.isFinite(x)) return 'NaN'
   // keep it readable
   const d = clamp(digits, 0, 12)
-  return x.toFixed(d).replace(/\.?0+$/, '')
+  const fixed = x.toFixed(d)
+  if (d === 0) return fixed
+  return fixed.replace(/\.0+$/, '').replace(/(\.\d*?)0+$/, '$1')
 }
 function pow(a: number, b: number) {
   return Math.pow(a, b)
@@ -104,8 +109,9 @@ function buildCtx(n: number, params: Partial<Omit<Ctx, 'n'>> = {}): Ctx {
   const phi = 1 - V
 
   // holes: la primul pas apar 7 goluri; apoi fiecare cub “rămas” produce 7 goluri noi
-  const holes = n <= 0 ? 0 : 7 * pow(20, n - 1)
-  const holesTot = n <= 0 ? 0 : 7 * ((pow(20, n) - 1) / (20 - 1))
+  const nInt = Math.round(n)
+  const holes = nInt <= 0 ? 0 : 7 * pow(20, nInt - 1)
+  const holesTot = nInt <= 0 ? 0 : 7 * ((pow(20, nInt) - 1) / (20 - 1))
 
   // example scalings
   const kEff = k0 * V
@@ -197,7 +203,7 @@ const DOCS: FormulaDoc[] = [
       { type: 'h2', text: 'Derived / physical scalings (example)' },
       { type: 'math', latex: `\\rho = V_n = ${fmt(c.rho, 6)}` },
       { type: 'math', latex: `\\phi = 1 - V_n = ${fmt(c.phi, 6)}` },
-      { type: 'math', latex: `H_n = 7\\cdot 20^{n-1} = ${fmt(c.holes, 0)}` },
+      { type: 'math', latex: c.n <= 0 ? `H_n = 0` : `H_n = 7\\cdot 20^{n-1} = ${fmt(c.holes, 0)}` },
       { type: 'math', latex: `H_{tot} = 7\\sum_{k=0}^{n-1}20^k = ${fmt(c.holesTot, 0)}` },
       { type: 'math', latex: `k_{eff} = k_0\\,V_n = ${fmt(c.kEff, 6)}` },
       { type: 'math', latex: `R_{eff}\\sim \\left(\\frac{3}{20}\\right)^n = ${fmt(c.REff, 8)}` },
@@ -357,6 +363,7 @@ const DOCS: FormulaDoc[] = [
       { type: 'text', text: 'La prima iterație scoți 7 sub-cuburi (centrul + cele 6 centre de fețe). Asta creează 7 goluri.' },
       { type: 'text', text: 'La iterația următoare, fiecare din cele 20 cuburi păstrate creează încă 7 goluri, etc.' },
       { type: 'spacer' },
+      { type: 'math', latex: `H_0 = 0` },
       { type: 'math', latex: `H_1 = 7` },
       { type: 'math', latex: `H_n = 7\\cdot 20^{n-1}\\quad (n\\ge 1)` },
       { type: 'spacer' },
@@ -472,34 +479,46 @@ export default function MathsAndJeans() {
 
   return (
     <RN.View style={{ flex: 1, backgroundColor: BG }}>
+      <ArchBackground />
+      <RN.View
+        pointerEvents="none"
+        style={{
+          ...RN.StyleSheet.absoluteFillObject,
+          opacity: 0.2,
+          backgroundColor: 'transparent',
+          borderTopWidth: 1,
+          borderTopColor: 'rgba(255,255,255,0.08)'
+        }}
+      />
       {/* blobs */}
-      <RN.View style={{ position: 'absolute', top: -140, left: -60, width: 280, height: 280, borderRadius: 999, backgroundColor: '#101c28', opacity: 0.8 }} />
-      <RN.View style={{ position: 'absolute', bottom: -160, right: -80, width: 320, height: 320, borderRadius: 999, backgroundColor: '#0e1f2b', opacity: 0.9 }} />
+      <RN.View style={{ position: 'absolute', top: -140, left: -60, width: 280, height: 280, borderRadius: 999, backgroundColor: '#141414', opacity: 0.7 }} />
+      <RN.View style={{ position: 'absolute', bottom: -160, right: -80, width: 320, height: 320, borderRadius: 999, backgroundColor: '#101010', opacity: 0.8 }} />
 
       <RN.View style={{ paddingHorizontal: 18, paddingTop: 26, paddingBottom: 10 }}>
-        <RN.Text style={{ color: '#eaf1ff', fontSize: 20, fontWeight: '800' }}>Mathsandjeans Board</RN.Text>
-        <RN.Text style={{ color: SUB, marginTop: 4 }}>Menger Sponge generator + demonstrații “from 0”</RN.Text>
+        <RuriNav />
+        <RN.Text style={{ color: INK, fontSize: 20, fontWeight: '800', marginTop: 12 }}>Cubes Laborator Maths Lab</RN.Text>
+        <RN.Text style={{ color: SUB, marginTop: 4 }}>Menger Sponge generator + demonstratii "from 0"</RN.Text>
 
         {/* n controller */}
         <RN.View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 12 }}>
-          <RN.Text style={{ color: '#b9d7ff', fontWeight: '700' }}>n:</RN.Text>
+          <RN.Text style={{ color: SUB, fontWeight: '700' }}>n:</RN.Text>
           <RN.TouchableOpacity
             onPress={() => setN((x) => Math.max(0, x - 1))}
-            style={{ paddingHorizontal: 10, paddingVertical: 8, borderRadius: 10, backgroundColor: '#111c2f' }}
+            style={{ paddingHorizontal: 10, paddingVertical: 8, borderRadius: 10, backgroundColor: 'rgba(255,255,255,0.06)', borderWidth: 1, borderColor: ARCH.BORDER }}
           >
-            <RN.Text style={{ color: '#fff', fontWeight: '800' }}>−</RN.Text>
+            <RN.Text style={{ color: INK, fontWeight: '800' }}>−</RN.Text>
           </RN.TouchableOpacity>
-          <RN.View style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10, backgroundColor: 'rgba(56,189,248,0.16)', borderWidth: 1, borderColor: 'rgba(56,189,248,0.4)' }}>
-            <RN.Text style={{ color: '#e0f2ff', fontWeight: '800' }}>{n}</RN.Text>
+          <RN.View style={{ paddingHorizontal: 12, paddingVertical: 8, borderRadius: 10, backgroundColor: 'rgba(255,255,255,0.08)', borderWidth: 1, borderColor: ARCH.BORDER_SOFT }}>
+            <RN.Text style={{ color: INK, fontWeight: '800' }}>{n}</RN.Text>
           </RN.View>
           <RN.TouchableOpacity
             onPress={() => setN((x) => Math.min(8, x + 1))}
-            style={{ paddingHorizontal: 10, paddingVertical: 8, borderRadius: 10, backgroundColor: '#111c2f' }}
+            style={{ paddingHorizontal: 10, paddingVertical: 8, borderRadius: 10, backgroundColor: 'rgba(255,255,255,0.06)', borderWidth: 1, borderColor: ARCH.BORDER }}
           >
-            <RN.Text style={{ color: '#fff', fontWeight: '800' }}>+</RN.Text>
+            <RN.Text style={{ color: INK, fontWeight: '800' }}>+</RN.Text>
           </RN.TouchableOpacity>
 
-          <RN.Text style={{ color: SUB, marginLeft: 6 }}>(0–8)</RN.Text>
+          <RN.Text style={{ color: SUB, marginLeft: 6 }}>(0-8)</RN.Text>
         </RN.View>
       </RN.View>
 

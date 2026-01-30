@@ -25,20 +25,20 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="energy"
-        options={{
-          title: 'energy',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="star.fill" color={color} />,
-        }}
-      />
+      <Tabs.Screen name="explore" options={{ title: 'Explorer', href: null }} />
+      <Tabs.Screen name="shader-studio" options={{ title: 'Shader', href: null }} />
+      <Tabs.Screen name="quiz" options={{ title: 'Quiz', href: null }} />
+      <Tabs.Screen name="learn" options={{ title: 'Learn', href: null }} />
+      <Tabs.Screen name="build-steps" options={{ title: 'Build Steps', href: null }} />
+      <Tabs.Screen name="real-life" options={{ title: 'Real Life', href: null }} />
+      <Tabs.Screen name="audio-reactive" options={{ title: 'Audio', href: null }} />
+      <Tabs.Screen name="builder" options={{ title: 'Builder', href: null }} />
+      <Tabs.Screen name="portal" options={{ title: 'Portal', href: null }} />
+      <Tabs.Screen name="daily" options={{ title: 'Daily', href: null }} />
+      <Tabs.Screen name="settings" options={{ title: 'Settings', href: null }} />
+      <Tabs.Screen name="energy" options={{ title: 'Energy', href: null }} />
+      <Tabs.Screen name="laborator" options={{ title: 'Lab', href: null }} />
+      <Tabs.Screen name="mathsandjeans" options={{ title: 'Maths Lab', href: null }} />
     </Tabs>
   );
 }

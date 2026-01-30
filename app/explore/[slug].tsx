@@ -2,7 +2,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useMemo, useState } from 'react';
 import * as ReactNative from 'react-native';
 import { ArchBackground, ARCH } from '@/components/arch-theme';
-import { ArchNav } from '@/components/arch-nav';
+import { RuriNav } from '@/components/ruri-nav';
 
 type Section = { heading: string; body: string }
 type Bullet = { label: string; description: string }
@@ -288,7 +288,7 @@ export default function DetailScreen() {
           <ReactNative.View style={{ width: 32 }} />
         </ReactNative.View>
         <ReactNative.View style={{ paddingHorizontal: 12, marginTop: 6 }}>
-          <ArchNav active="/explore" />
+          <RuriNav />
         </ReactNative.View>
 
         <ReactNative.View style={{ padding: 16 }}>

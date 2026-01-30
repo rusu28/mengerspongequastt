@@ -3,7 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react'
 import * as ReactNative from 'react-native'
 import * as THREE from 'three'
 import { ArchBackground, ARCH } from '@/components/arch-theme'
-import { ArchNav } from '@/components/arch-nav'
+import { RuriNav } from '@/components/ruri-nav'
 
 type ControlMode = 'throw' | 'grab' | 'camera'
 
@@ -640,7 +640,7 @@ export default function EnergyLab() {
           zIndex: 20
         }}
       >
-        <ArchNav active="/energy" />
+        <RuriNav />
       </ReactNative.View>
 
       <ReactNative.View

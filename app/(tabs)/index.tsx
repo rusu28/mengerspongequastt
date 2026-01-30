@@ -124,6 +124,8 @@ export default function HomeScreen() {
   const { width } = useWindowDimensions()
   const columns = Math.max(12, Math.floor(width / 54))
   const isNarrow = width < 820
+  const contentPadding = width < 720 ? 14 : 18
+  const contentBottom = width < 720 ? 70 : 80
   const scrollY = useRef(new Animated.Value(0)).current
   const scrollRef = useRef(0)
 
@@ -169,7 +171,7 @@ export default function HomeScreen() {
       <Animated.View style={[styles.hazeLayerSecondary, { transform: [{ translateY: hazeShift }] }]} />
 
       <Animated.ScrollView
-        contentContainerStyle={styles.content}
+        contentContainerStyle={[styles.content, { padding: contentPadding, paddingBottom: contentBottom }]}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={Animated.event([{ nativeEvent: { contentOffset: { y: scrollY } } }], {

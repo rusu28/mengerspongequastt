@@ -412,6 +412,9 @@ const DOCS: FormulaDoc[] = [
 export default function MathsAndJeans() {
   // Change n here (or add a slider)
   const [n, setN] = useState(2)
+  const { width } = RN.useWindowDimensions()
+  const isNarrow = width < 900
+  const isPhone = width < 640
 
   const ctx = useMemo(
     () =>
@@ -494,13 +497,13 @@ export default function MathsAndJeans() {
       <RN.View style={{ position: 'absolute', top: -140, left: -60, width: 280, height: 280, borderRadius: 999, backgroundColor: '#141414', opacity: 0.7 }} />
       <RN.View style={{ position: 'absolute', bottom: -160, right: -80, width: 320, height: 320, borderRadius: 999, backgroundColor: '#101010', opacity: 0.8 }} />
 
-      <RN.View style={{ paddingHorizontal: 18, paddingTop: 26, paddingBottom: 10 }}>
+      <RN.View style={{ paddingHorizontal: isPhone ? 12 : 18, paddingTop: 26, paddingBottom: 10 }}>
         <RuriNav />
         <RN.Text style={{ color: INK, fontSize: 20, fontWeight: '800', marginTop: 12 }}>Cubes Laborator Maths Lab</RN.Text>
         <RN.Text style={{ color: SUB, marginTop: 4 }}>Menger Sponge generator + demonstratii "from 0"</RN.Text>
 
         {/* n controller */}
-        <RN.View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, marginTop: 12 }}>
+        <RN.View style={{ flexDirection: 'row', alignItems: 'center', gap: 10, rowGap: 10, flexWrap: 'wrap', marginTop: 12 }}>
           <RN.Text style={{ color: SUB, fontWeight: '700' }}>n:</RN.Text>
           <RN.TouchableOpacity
             onPress={() => setN((x) => Math.max(0, x - 1))}
@@ -522,34 +525,73 @@ export default function MathsAndJeans() {
         </RN.View>
       </RN.View>
 
-      <RN.View style={{ flex: 1, paddingHorizontal: 14, paddingBottom: 16, flexDirection: 'row', gap: 12 }}>
+      <RN.View
+        style={{
+          flex: 1,
+          paddingHorizontal: isPhone ? 12 : 14,
+          paddingBottom: 16,
+          flexDirection: isNarrow ? 'column' : 'row',
+          gap: 12
+        }}
+      >
         {/* left menu */}
-        <RN.View style={{ width: 170 }}>
+        <RN.View style={{ width: isNarrow ? '100%' : 170 }}>
           <RN.Text style={{ color: '#b9d7ff', fontWeight: '700', marginBottom: 8 }}>Formulas</RN.Text>
-          <RN.ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 12 }}>
-            {DOCS.map((d) => {
-              const active = d.key === selectedKey
-              return (
-                <RN.TouchableOpacity
-                  key={d.key}
-                  onPress={() => setSelectedKey(d.key)}
-                  style={{
-                    paddingHorizontal: 10,
-                    paddingVertical: 10,
-                    borderRadius: 12,
-                    marginBottom: 8,
-                    backgroundColor: active ? 'rgba(56,189,248,0.18)' : 'rgba(15,26,38,0.7)',
-                    borderWidth: 1,
-                    borderColor: active ? 'rgba(56,189,248,0.7)' : 'rgba(255,255,255,0.08)'
-                  }}
-                >
-                  <RN.Text style={{ color: active ? '#e0f2ff' : '#c9d6ea', fontSize: 12, fontWeight: '700' }}>
-                    {d.title}
-                  </RN.Text>
-                </RN.TouchableOpacity>
-              )
-            })}
-          </RN.ScrollView>
+          {isNarrow ? (
+            <RN.ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingBottom: 12, gap: 8, paddingRight: 6 }}
+            >
+              {DOCS.map((d) => {
+                const active = d.key === selectedKey
+                return (
+                  <RN.TouchableOpacity
+                    key={d.key}
+                    onPress={() => setSelectedKey(d.key)}
+                    style={{
+                      paddingHorizontal: 12,
+                      paddingVertical: 10,
+                      borderRadius: 12,
+                      backgroundColor: active ? 'rgba(56,189,248,0.18)' : 'rgba(15,26,38,0.7)',
+                      borderWidth: 1,
+                      borderColor: active ? 'rgba(56,189,248,0.7)' : 'rgba(255,255,255,0.08)',
+                      minWidth: 160
+                    }}
+                  >
+                    <RN.Text style={{ color: active ? '#e0f2ff' : '#c9d6ea', fontSize: 12, fontWeight: '700' }}>
+                      {d.title}
+                    </RN.Text>
+                  </RN.TouchableOpacity>
+                )
+              })}
+            </RN.ScrollView>
+          ) : (
+            <RN.ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 12 }}>
+              {DOCS.map((d) => {
+                const active = d.key === selectedKey
+                return (
+                  <RN.TouchableOpacity
+                    key={d.key}
+                    onPress={() => setSelectedKey(d.key)}
+                    style={{
+                      paddingHorizontal: 10,
+                      paddingVertical: 10,
+                      borderRadius: 12,
+                      marginBottom: 8,
+                      backgroundColor: active ? 'rgba(56,189,248,0.18)' : 'rgba(15,26,38,0.7)',
+                      borderWidth: 1,
+                      borderColor: active ? 'rgba(56,189,248,0.7)' : 'rgba(255,255,255,0.08)'
+                    }}
+                  >
+                    <RN.Text style={{ color: active ? '#e0f2ff' : '#c9d6ea', fontSize: 12, fontWeight: '700' }}>
+                      {d.title}
+                    </RN.Text>
+                  </RN.TouchableOpacity>
+                )
+              })}
+            </RN.ScrollView>
+          )}
         </RN.View>
 
         {/* board */}

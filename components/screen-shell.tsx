@@ -12,6 +12,9 @@ type ScreenShellProps = {
 export function ScreenShell({ title, subtitle, children }: ScreenShellProps) {
   const { width } = useWindowDimensions()
   const wide = width >= 900
+  const compact = width < 720
+  const paddingHorizontal = wide ? 36 : width < 720 ? 14 : 20
+  const paddingBottom = width < 720 ? 28 : 36
 
   return (
     <SafeAreaView style={styles.root}>
@@ -29,7 +32,13 @@ export function ScreenShell({ title, subtitle, children }: ScreenShellProps) {
           </View>
         ) : null}
         <View style={styles.page}>
-          <ScrollView contentContainerStyle={[styles.content, wide && styles.contentWide]} showsVerticalScrollIndicator={false}>
+          <ScrollView
+            contentContainerStyle={[
+              styles.content,
+              { paddingHorizontal, paddingBottom }
+            ]}
+            showsVerticalScrollIndicator={false}
+          >
             <View style={styles.header}>
               <RuriNav />
               <View style={styles.headerLine} />
@@ -38,7 +47,7 @@ export function ScreenShell({ title, subtitle, children }: ScreenShellProps) {
             </View>
             {children}
           </ScrollView>
-          <View style={styles.footer}>
+          <View style={[styles.footer, compact && styles.footerCompact]}>
             <Text style={styles.footerText}>Rus Vlad Andrei & Strajan Andrei</Text>
             <Text style={styles.footerText}>Cubes Laborator</Text>
           </View>
@@ -98,9 +107,6 @@ const styles = StyleSheet.create({
     padding: 20,
     paddingBottom: 36
   },
-  contentWide: {
-    paddingHorizontal: 36
-  },
   header: {
     marginBottom: 20
   },
@@ -128,6 +134,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  footerCompact: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    gap: 6
   },
   footerText: {
     color: ARCH.MUTED,

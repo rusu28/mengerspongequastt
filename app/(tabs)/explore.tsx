@@ -331,6 +331,8 @@ export default function ExploreScreen() {
   const mobile = useIsMobile()
   const { width } = useWindowDimensions()
   const wide = width >= 900
+  const compact = width < 720
+  const contentPadding = compact ? 14 : 20
 
   useEffect(() => {
     if (!mobile) return
@@ -348,7 +350,10 @@ export default function ExploreScreen() {
   return (
     <SafeAreaView style={styles.root}>
       <ArchBackground />
-      <ScrollView contentContainerStyle={styles.content} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={[styles.content, { paddingHorizontal: contentPadding, paddingTop: contentPadding }]}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={styles.header}>
           <RuriNav />
           <Text style={styles.kicker}>NEW PERSPECTIVE</Text>
@@ -398,7 +403,7 @@ export default function ExploreScreen() {
           </View>
         </View>
 
-        <View style={styles.sectionHeader}>
+        <View style={[styles.sectionHeader, compact && styles.sectionHeaderCompact]}>
           <Text style={styles.sectionTitle}>Control grid</Text>
           <Text style={styles.sectionMeta}>Iteration / Motion / Material</Text>
         </View>
@@ -473,7 +478,7 @@ export default function ExploreScreen() {
           ) : null}
         </View>
 
-        <View style={styles.sectionHeader}>
+        <View style={[styles.sectionHeader, compact && styles.sectionHeaderCompact]}>
           <Text style={styles.sectionTitle}>The archive</Text>
           <Text style={styles.sectionMeta}>Vol. 01 — 2024</Text>
         </View>
@@ -587,6 +592,11 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  sectionHeaderCompact: {
+    flexDirection: 'column',
+    gap: 4,
+    alignItems: 'flex-start'
   },
   sectionTitle: {
     color: ARCH.TEXT,
@@ -725,3 +735,4 @@ const styles = StyleSheet.create({
     marginTop: 6
   }
 })
+

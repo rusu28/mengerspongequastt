@@ -64,33 +64,77 @@ export default function IndexWeb() {
         * { scrollbar-width: none; }
         *::-webkit-scrollbar { width: 0; height: 0; background: transparent; }
         ::selection { background: #f5f5f5; color: #0a0a0a; }
+        .nav {
+          position: fixed;
+          top: 18px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: min(1100px, 94vw);
+          z-index: 50;
+          border-radius: 999px;
+          padding: 10px 18px;
+          background: rgba(0,0,0,0.4);
+          border: 1px solid transparent;
+          backdrop-filter: blur(12px);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          transition: all 200ms ease;
+        }
+        .nav.scrolled {
+          background: rgba(0,0,0,0.72);
+          border-color: #2a2a2a;
+        }
+        .nav-brand {
+          font-weight: 800;
+          letter-spacing: 0.22em;
+          text-transform: uppercase;
+          font-size: 12px;
+          white-space: nowrap;
+        }
+        .nav-items {
+          display: flex;
+          gap: 14px;
+          flex-wrap: wrap;
+          justify-content: center;
+          flex: 1;
+          margin-left: 16px;
+        }
+        .nav-dot {
+          width: 36px;
+          height: 36px;
+          border-radius: 18px;
+          border: 1px solid #2a2a2a;
+          flex-shrink: 0;
+        }
+        @media (max-width: 720px) {
+          .nav {
+            width: 92vw;
+            padding: 8px 12px;
+            top: 10px;
+          }
+          .nav-items {
+            display: none;
+          }
+          .nav-brand {
+            font-size: 10px;
+            letter-spacing: 0.18em;
+          }
+          .nav-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 14px;
+          }
+        }
         @keyframes floatSlow {
           0% { transform: translateY(0px); }
           100% { transform: translateY(-18px); }
         }
       `}</style>
 
-      <div
-        style={{
-          position: 'fixed',
-          top: 18,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          width: 'min(1100px, 94vw)',
-          zIndex: 50,
-          borderRadius: 999,
-          padding: '10px 18px',
-          background: scrolled ? 'rgba(0,0,0,0.72)' : 'rgba(0,0,0,0.4)',
-          border: scrolled ? '1px solid #2a2a2a' : '1px solid transparent',
-          backdropFilter: 'blur(12px)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          transition: 'all 200ms ease'
-        }}
-      >
-        <div style={{ fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', fontSize: 12 }}>Cubes Laborator</div>
-        <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center', flex: 1, marginLeft: 16 }}>
+      <div className={`nav${scrolled ? ' scrolled' : ''}`}>
+        <div className="nav-brand">Cubes Laborator</div>
+        <div className="nav-items">
           {NAV_ITEMS.map((item) => (
             <a
               key={item.href}
@@ -118,7 +162,7 @@ export default function IndexWeb() {
             </a>
           ))}
         </div>
-        <div style={{ width: 36, height: 36, borderRadius: 18, border: '1px solid #2a2a2a' }} />
+        <div className="nav-dot" />
       </div>
 
       <Parallax ref={parallax} pages={6} style={{ background: '#0a0a0a' }}>

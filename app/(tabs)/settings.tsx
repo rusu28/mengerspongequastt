@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { SafeAreaView, StyleSheet, Text, View, Pressable, Switch } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View, Pressable, Switch, useWindowDimensions } from 'react-native'
 import { ArchBackground, ARCH } from '@/components/arch-theme'
 import { RuriNav } from '@/components/ruri-nav'
 
@@ -7,9 +7,12 @@ export default function Settings() {
   const [lowGraphics, setLowGraphics] = useState(false)
   const [autoRotate, setAutoRotate] = useState(true)
   const [notifications, setNotifications] = useState(false)
+  const { width } = useWindowDimensions()
+  const compact = width < 720
+  const padding = compact ? 14 : 24
 
   return (
-    <SafeAreaView style={styles.root}>
+    <SafeAreaView style={[styles.root, { paddingHorizontal: padding }]}>
       <ArchBackground />
       <View style={styles.header}>
         <RuriNav />
@@ -17,8 +20,8 @@ export default function Settings() {
 
       <View style={styles.main}>
         <Text style={styles.kicker}>System Control</Text>
-        <Text style={styles.title}>Settings</Text>
-        <Text style={styles.sub}>Tune rendering, motion, and system preferences.</Text>
+        <Text style={[styles.title, compact && styles.titleCompact]}>Settings</Text>
+        <Text style={[styles.sub, compact && styles.subCompact]}>Tune rendering, motion, and system preferences.</Text>
 
         <View style={styles.panel}>
           {[
@@ -46,7 +49,7 @@ export default function Settings() {
         </View>
       </View>
 
-      <View style={styles.footer}>
+      <View style={[styles.footer, compact && styles.footerCompact]}>
         <Text style={styles.footerText}>© 2024 LUXE DIGITAL ESTATES</Text>
         <Text style={styles.footerText}>Invitations Only</Text>
       </View>
@@ -81,10 +84,16 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     letterSpacing: 0.5
   },
+  titleCompact: {
+    fontSize: 28
+  },
   sub: {
     color: ARCH.SUB,
     marginTop: 12,
     maxWidth: 320
+  },
+  subCompact: {
+    maxWidth: 280
   },
   panel: {
     width: '100%',
@@ -126,9 +135,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
+  footerCompact: {
+    flexDirection: 'column',
+    gap: 6,
+    alignItems: 'flex-start'
+  },
   footerText: {
     color: ARCH.MUTED,
     fontSize: 9,
     letterSpacing: 2
   }
 })
+

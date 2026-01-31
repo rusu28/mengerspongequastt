@@ -60,7 +60,7 @@ export default function Daily() {
   return (
     <ScreenShell
       title="Daily Challenge"
-      subtitle="Ruri lines mode: one focused mission per day."
+      subtitle="Racovita lines mode: one focused mission per day."
     >
       <View style={styles.hero}>
         <View>

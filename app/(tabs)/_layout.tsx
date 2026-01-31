@@ -31,6 +31,7 @@ export default function TabLayout() {
       <Tabs.Screen name="learn" options={{ title: 'Learn', href: null }} />
       <Tabs.Screen name="build-steps" options={{ title: 'Build Steps', href: null }} />
       <Tabs.Screen name="real-life" options={{ title: 'Real Life', href: null }} />
+      <Tabs.Screen name="about-team" options={{ title: 'About Team', href: null }} />
       <Tabs.Screen name="audio-reactive" options={{ title: 'Audio', href: null }} />
       <Tabs.Screen name="builder" options={{ title: 'Builder', href: null }} />
       <Tabs.Screen name="portal" options={{ title: 'Portal', href: null }} />

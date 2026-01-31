@@ -32,8 +32,8 @@ export default function RealLife() {
       </View>
 
       <View style={styles.callout}>
-        <Text style={styles.calloutTitle}>Capture it</Text>
-        <Text style={styles.calloutText}>See something fractal? Use the Export + Build page to save a render and share it later.</Text>
+        <Text style={styles.calloutTitle}>💘</Text>
+        <Text style={styles.calloutText}>Love coding(R.V.A)</Text>
       </View>
     </ScreenShell>
   )

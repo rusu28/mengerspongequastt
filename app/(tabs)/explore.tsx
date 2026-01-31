@@ -148,7 +148,7 @@ function Menger({ order, lowGraphics, mobile, vrRotation, zoom, rotationSpeed, a
     return { span: Math.max(spanX, spanY, spanZ) }
   }, [positions, finalCubeSize])
 
-  const defaultTargetPixels = mobile ? Math.min(380, Math.min(size.width, size.height) * 0.7) : Math.min(520, Math.min(size.width, size.height) * 0.42)
+  const defaultTargetPixels = mobile ? Math.min(520, Math.min(size.width, size.height) * 0.9) : Math.min(520, Math.min(size.width, size.height) * 0.42)
   const worldPerPixel = viewport.width / size.width
   const targetWorld = defaultTargetPixels * worldPerPixel
   const globalScale = (targetWorld / (bounds.span || 1)) * zoom
@@ -364,7 +364,7 @@ export default function ExploreScreen() {
 
         <View style={[styles.hero, wide && styles.heroWide]}>
           <View style={styles.heroText}>
-            <Text style={styles.heroLabel}>Ruri Lines / Studio</Text>
+            <Text style={styles.heroLabel}>Racovita Lines / Studio</Text>
             <Text style={styles.heroTitle}>Abstract line study, rendered in 3D volume.</Text>
             <Text style={styles.heroBody}>Tune depth, zoom, and surface behavior without leaving the editorial flow.</Text>
             <View style={styles.metaRow}>
@@ -383,7 +383,7 @@ export default function ExploreScreen() {
             </View>
           </View>
 
-          <View style={styles.heroCanvas}>
+          <View style={[styles.heroCanvas, !wide && styles.heroCanvasCompact]}>
             <Canvas camera={{ position: mobile ? [2.6, 2.6, 2.6] : [2, 2, 2], fov: mobile ? 60 : 50 }}>
               <color attach="background" args={[ARCH.BG]} />
               <ambientLight intensity={0.6} />
@@ -556,6 +556,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: ARCH.BORDER_SOFT,
     backgroundColor: 'rgba(0,0,0,0.4)'
+  },
+  heroCanvasCompact: {
+    minHeight: 320
   },
   heroLabel: {
     color: ARCH.MUTED,

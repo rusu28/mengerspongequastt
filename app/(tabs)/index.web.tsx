@@ -5,11 +5,12 @@ const url = (name: string, wrap = false) =>
   `${wrap ? 'url(' : ''}https://awv3node-homepage.surge.sh/build/assets/${name}.svg${wrap ? ')' : ''}`
 
 const NAV_ITEMS = [
-  { label: 'Index', href: '/(tabs)' },
+  { label: 'Home', href: '/(tabs)' },
   { label: 'Explore', href: '/explore' },
   { label: 'Shader Studio', href: '/shader-studio' },
   { label: 'Real Life', href: '/real-life' },
   { label: 'Quiz', href: '/quiz' },
+  { label: 'About Team', href: '/about-team' },
   { label: 'Portal', href: '/portal' },
   { label: 'Maths Lab', href: '/mathsandjeans' },
   { label: 'Learn', href: '/learn' },

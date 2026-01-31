@@ -4,11 +4,12 @@ import { useRouter, usePathname } from 'expo-router'
 import { ARCH } from './arch-theme'
 
 const NAV_ITEMS = [
-  { label: 'Index', route: '/(tabs)' },
+  { label: 'Home', route: '/(tabs)' },
   { label: 'Explore', route: '/explore' },
   { label: 'Shader Studio', route: '/shader-studio' },
   { label: 'Real Life', route: '/real-life' },
   { label: 'Quiz', route: '/quiz' },
+  { label: 'About Team', route: '/about-team' },
   { label: 'Learn', route: '/learn' },
   { label: 'Portal', route: '/portal' },
   { label: 'Maths Lab', route: '/mathsandjeans' },
